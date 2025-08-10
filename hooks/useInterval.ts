@@ -11,7 +11,7 @@ export const useInterval: (callback: () => void, interval: number) => void = (
   callback,
   interval,
 ) => {
-  const callbackRef = useRef<typeof callback>()
+  const callbackRef = useRef<(() => void) | null>(null)
   useEffect(() => {
     callbackRef.current = callback
   }, [callback])
@@ -19,7 +19,7 @@ export const useInterval: (callback: () => void, interval: number) => void = (
   // Set up the interval.
   useEffect(() => {
     function cb() {
-      callbackRef.current && callbackRef.current()
+      if (callbackRef.current) callbackRef.current()
     }
     const id = setInterval(cb, interval)
     return () => clearInterval(id)
