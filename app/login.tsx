@@ -49,9 +49,11 @@ export default function LoginScreen() {
     <View className="flex-1 bg-[--color-background] items-center justify-center">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="w-[80%] max-w-[900px] gap-[2vh]">
-        <ThemedText type={ThemedTextType.title} className="mb-[2vh]">
-          Sign in to Jellyfin
-        </ThemedText>
+        {Platform.isTV ? null : (
+          <ThemedText type={ThemedTextType.title} className="mb-[2vh]">
+            Sign in to Jellyfin
+          </ThemedText>
+        )}
 
         <View className="gap-[1.5vh]">
           <ThemedText className="opacity-80">Server URL</ThemedText>

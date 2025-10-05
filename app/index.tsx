@@ -56,30 +56,43 @@ export default function TVHomeScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator
-        contentContainerClassName="px-[6vh] pt-[6vh] pb-[10vh] gap-[3vh]"
+        contentContainerClassName="px-[6vh] pt-[4vh] pb-[10vh] gap-[3vh]"
       >
-        <View className="flex-row items-center justify-between">
-          <ThemedText type={ThemedTextType.title}>Jellyfin</ThemedText>
-          <View className="flex-row gap-[2vh]">
-            <ThemedButton onPress={load}>
-              {loading ? "Refreshing…" : "Refresh"}
-            </ThemedButton>
-            <ThemedButton onPress={() => router.push("/login")}>
-              Sign in
-            </ThemedButton>
+        {/* Title row hidden on tvOS, nav bar shows title */}
+        {Platform.isTV ? null : (
+          <View className="flex-row items-center justify-between">
+            <ThemedText type={ThemedTextType.title}>Jellyfin</ThemedText>
+            <View className="flex-row gap-[2vh]">
+              <ThemedButton onPress={load}>
+                {loading ? "Refreshing…" : "Refresh"}
+              </ThemedButton>
+              <ThemedButton onPress={() => router.push("/login")}>
+                Sign in
+              </ThemedButton>
+            </View>
           </View>
-        </View>
+        )}
 
         {error ? (
           <ThemedText className="text-red-400">{error}</ThemedText>
         ) : null}
 
         <View style={{ gap: tileSize.gap }} className="flex-row flex-wrap">
-          {libraries.map((lib) => (
+          {libraries.map((lib, idx) => (
             <Pressable
               key={lib.Id ?? lib.Name}
               onPress={() => router.push(`/library/${lib.Id}`)}
-              tvParallaxProperties={{ enabled: false }}
+              tvParallaxProperties={{
+                enabled: Platform.isTV,
+                shiftDistanceX: 2.0,
+                shiftDistanceY: 2.0,
+                tiltAngle: 0.03,
+                magnification: 1.05,
+                pressMagnification: 1.02,
+                pressDuration: 0.15,
+                pressDelay: 0.0,
+              }}
+              hasTVPreferredFocus={Platform.isTV && idx === 0}
               style={{ width: tileSize.size, height: tileSize.size }}
               className={`rounded-[2vh] bg-[--color-background-elevated] border-[0.25vh] border-[--color-border] justify-center items-center transition focus:bg-[--color-background-press] hover:bg-[--color-background-press] active:bg-[--color-background-press]`}
             >

@@ -12,6 +12,7 @@ import {
 import "@/global.css";
 import { useTheme } from "@/hooks/useTheme";
 import { useScreenDimensions } from "@/hooks/useScreenDimensions";
+import { TVNavigationBar } from "@/components/TVNavigationBar";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -45,6 +46,7 @@ export default function RootLayout() {
   return (
     <View style={theme} className="bg-[--color-background] flex-1">
       <GestureHandlerRootView>
+        <TVNavigationBar />
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="login" options={{ headerShown: false }} />

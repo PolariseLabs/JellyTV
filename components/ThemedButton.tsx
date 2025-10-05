@@ -40,6 +40,7 @@ export function ThemedButton({
   textClassName,
   textType,
   focusHoverBehavior,
+  hasTVPreferredFocus,
   ...props
 }: PressableProps & {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
@@ -48,9 +49,9 @@ export function ThemedButton({
   textClassName?: string;
   textType?: ThemedTextType | undefined;
   focusHoverBehavior?: ThemedButtonBehavior | undefined;
+  hasTVPreferredFocus?: boolean;
 }) {
-  const behavior =
-    focusHoverBehavior ?? ThemedButtonBehavior.borderOnFocusHover;
+  const behavior = focusHoverBehavior ?? ThemedButtonBehavior.borderOnFocusHover;
   return (
     <Pressable
       accessible
@@ -58,13 +59,11 @@ export function ThemedButton({
       accessibilityRole="button"
       onPress={onPress}
       tvParallaxProperties={{ enabled: false }}
+      hasTVPreferredFocus={hasTVPreferredFocus}
       className={`${pressableClassNames[behavior]} ${className ?? ''}`}
       {...props}
     >
-      <ThemedText
-        type={textType ?? ThemedTextType.link}
-        className={textClassName}
-      >
+      <ThemedText type={textType ?? ThemedTextType.link} className={textClassName}>
         {children}
       </ThemedText>
     </Pressable>
